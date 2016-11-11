@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">MiServicioParaMisNotas</string>
+    <string name="btnStarService_Text">Comenzar Servicio</string>
+    <string name="btnStopService_text">Stop Service</string>
+</resources>
