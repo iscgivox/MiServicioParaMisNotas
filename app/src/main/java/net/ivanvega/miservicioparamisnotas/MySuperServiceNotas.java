@@ -1,10 +1,17 @@
 package net.ivanvega.miservicioparamisnotas;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
+import android.graphics.Color;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.support.v4.app.NotificationManagerCompat;
+import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -15,7 +22,7 @@ import android.widget.Toast;
 
 public class MySuperServiceNotas extends Service {
 
-
+     ;
     private Handler handler =
             new Handler();
 
@@ -52,7 +59,37 @@ public class MySuperServiceNotas extends Service {
         public void run() {
 
             Log.d("HILOCORRIENdo", "HILOCORRIENdo");
-            handler.postDelayed(this,2000);
+
+
+            NotificationCompat.Builder nb=
+                    new NotificationCompat.Builder(getApplicationContext());
+            nb.setSmallIcon(R.mipmap.ic_launcher);
+            nb.setTicker("validar a: " );
+            nb.setContentTitle("Validar al usuario");
+            nb.setContentText("Pedrito " + "\n"
+                    + "@pedrito");
+            nb.setAutoCancel(true);
+
+            nb.setLights(Color.BLUE, 500, 1000);
+
+            Intent i = new Intent(Intent.ACTION_VIEW,
+                    Uri.parse("http://sicenet.itsur.edu.mx")
+            );
+            PendingIntent pi = PendingIntent.getActivity
+                    (getBaseContext(), 1001, i, PendingIntent.FLAG_CANCEL_CURRENT) ;
+            nb.setContentIntent(pi);
+            Notification n = nb.build();
+
+            n.defaults |= Notification.DEFAULT_LIGHTS;
+            n.defaults |= Notification.DEFAULT_VIBRATE;
+            n.defaults |= Notification.DEFAULT_SOUND;
+
+            NotificationManager  nmc = (NotificationManager)
+                    getSystemService(NOTIFICATION_SERVICE);
+
+            nmc.notify(1001, n);
+
+            handler.postDelayed(this,5000);
         }
 
     };
